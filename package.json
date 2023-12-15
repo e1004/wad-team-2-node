@@ -1,0 +1,22 @@
+{
+  "name": "wad-team-2-node",
+  "version": "1.0.0",
+  "description": "wad team 2 back end",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e1004/wad-team-2-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/e1004/wad-team-2-node/issues"
+  },
+  "homepage": "https://github.com/e1004/wad-team-2-node#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
