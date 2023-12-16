@@ -24,8 +24,16 @@ app.post('/posts', async (req, res) => {
     );
     res
       .status(201)
-      .json({ key: newPost.rows[0] });
+      .json({ data: newPost.rows[0] });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
+});
+
+app.get('/posts', async (req, res) => {
+  const posts = await pool.query(
+    'SELECT * FROM post',
+    [],
+  );
+  res.status(200).json({ data: posts.rows });
 });
