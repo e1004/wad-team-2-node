@@ -36,3 +36,11 @@ Keep-Alive: timeout=5
 curl localhost:3000/posts/23d3f38a-2301-43b6-a2ac-9b97c2bd1092
 {"data":{"id":"23d3f38a-2301-43b6-a2ac-9b97c2bd1092","author_name":"nim345i","author_email":"email","created_at":"2023-12-16T18:14:18.197Z","text":"lalala","likes":0}}
 ```
+
+## Delete existing post
+
+```bash
+curl -X DELETE localhost:3000/posts/23d3f38a-2301-43b6-a2ac-9b97c2bd1092
+```
+
+(returns 204 no content)

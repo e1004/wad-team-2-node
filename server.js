@@ -50,3 +50,20 @@ app.get('/posts/:id', async (req, res) => {
     res.status(200).json({ data: post.rows[0] });
   }
 });
+
+app.delete('/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+  await pool.query(
+    'DELETE FROM post WHERE id=$1',
+    [postId],
+  );
+  res.status(204).send();
+});
+
+app.delete('/posts', async (req, res) => {
+  await pool.query(
+    'DELETE FROM post',
+    [],
+  );
+  res.status(204).send();
+});
