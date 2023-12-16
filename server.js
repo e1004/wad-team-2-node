@@ -37,3 +37,16 @@ app.get('/posts', async (req, res) => {
   );
   res.status(200).json({ data: posts.rows });
 });
+
+app.get('/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+  const post = await pool.query(
+    'SELECT * FROM post WHERE id=$1',
+    [postId],
+  );
+  if (post.rows.length === 0) {
+    res.status(404).json({ error: 'Post not found' });
+  } else {
+    res.status(200).json({ data: post.rows[0] });
+  }
+});
