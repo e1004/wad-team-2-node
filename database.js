@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',
@@ -19,12 +19,14 @@ const execute = async (query) => {
   }
 };
 
-// TODO: create necessary tables for posts
 const createTblQuery = `
-    CREATE TABLE IF NOT EXISTS "posts" (
+    CREATE TABLE IF NOT EXISTS "post" (
         id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-        ... VARCHAR(200) NOT NULL UNIQUE,
-        ... VARCHAR(200) NOT NULL
+        author_name text,
+        author_email text,
+        created_at timestamptz NOT NULL DEFAULT NOW(),
+        text text NOT NULL,
+        likes smallint NOT NULL DEFAULT 0
     );`;
 
 execute(createTblQuery).then((result) => {
@@ -33,4 +35,4 @@ execute(createTblQuery).then((result) => {
   }
 });
 
-export default pool;
+module.exports = pool;
