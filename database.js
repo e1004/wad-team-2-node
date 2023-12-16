@@ -1,4 +1,12 @@
 const { Pool } = require('pg');
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new winston.transports.Console(),
+  ],
+});
 
 const pool = new Pool({
   user: 'postgres',
@@ -14,7 +22,7 @@ const execute = async (query) => {
     await pool.query(query); // executes a query
     return true;
   } catch (error) {
-    console.error(error.stack);
+    logger.error(error.stack);
     return false;
   }
 };
@@ -31,7 +39,7 @@ const createTblQuery = `
 
 execute(createTblQuery).then((result) => {
   if (result) {
-    console.log('Table "posts" is created');
+    logger.info('Table "posts" is created');
   }
 });
 

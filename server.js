@@ -1,3 +1,4 @@
+const morgan = require('morgan');
 const express = require('express');
 const pool = require('./database');
 
@@ -6,10 +7,9 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+app.use(morgan('tiny'));
 
-app.listen(port, () => {
-  console.log(`Server is listening to port ${port}`);
-});
+app.listen(port, () => {});
 
 app.post('/posts', async (req, res) => {
   try {
