@@ -13,6 +13,14 @@ curl -X POST localhost:3000/auth/signup -d '{"email": "a@a.com", "password": "12
 duplicate key value violates unique constraint "app_user_email_key
 ```
 
+## Login user
+
+```bash
+curl -X POST localhost:3000/auth/login -d '{"email": "a@a.com", "password": "1234"}' -H "content-type:applicat
+ion/json"
+{"user_id":"3ed4eb29-2111-46a1-ad45-974ed4961fe7"}
+```
+
 ## Create a new post
 
 ... without user
