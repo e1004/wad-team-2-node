@@ -15,9 +15,18 @@ duplicate key value violates unique constraint "app_user_email_key
 
 ## Create a new post
 
+... without user
+
 ```bash
 curl -X POST localhost:3000/posts -d '{"text": "lalala"}' -H "Content-Type: application/json"
 {"data":{"id":"8681ac0f-305e-405d-87c9-25edfcd144d5","user_id":null,"created_at":"2023-12-17T13:13:20.307Z","text":"lalala","likes":0}}
+```
+
+... with user
+
+```bash
+ curl -X POST localhost:3000/posts -d '{"text": "Tere", "userId": "3ed4eb29-2111-46a1-ad45-974ed4961fe7"}' -H "Content-Type: application/json"
+{"data":{"id":"17667cec-d75e-456c-b801-a8792d88715d","user_id":"3ed4eb29-2111-46a1-ad45-974ed4961fe7","created_at":"2023-12-17T13:17:52.512Z","text":"Tere","likes":0}}
 ```
 
 ## Update existing post
