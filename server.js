@@ -20,14 +20,13 @@ app.listen(port, () => {});
 
 app.post('/posts', async (req, res) => {
   try {
-    const { authorName, authorEmail, text } = req.body;
+    const { userId, text } = req.body;
     const newPost = await pool.query(
       `INSERT INTO post(
-        author_name,
-        author_email,
-        text) VALUES ($1, $2, $3)
+        user_id,
+        text) VALUES ($1, $2)
         RETURNING *`,
-      [authorName, authorEmail, text],
+      [userId, text],
     );
     res
       .status(201)

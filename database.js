@@ -28,19 +28,19 @@ const execute = async (query) => {
 };
 
 const createTblQuery = `
-    CREATE TABLE IF NOT EXISTS post (
-        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-        author_name text,
-        author_email text,
-        created_at timestamptz NOT NULL DEFAULT NOW(),
-        text text NOT NULL,
-        likes smallint NOT NULL DEFAULT 0
-    );
     CREATE TABLE IF NOT EXISTS app_user (
       id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
       email text NOT NULL UNIQUE,
       password text NOT NULL
-  );`;
+    );
+    CREATE TABLE IF NOT EXISTS post (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id uuid,
+        created_at timestamptz NOT NULL DEFAULT NOW(),
+        text text NOT NULL,
+        likes smallint NOT NULL DEFAULT 0,
+        CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id) ON DELETE CASCADE
+    );`;
 
 execute(createTblQuery).then((result) => {
   if (result) {

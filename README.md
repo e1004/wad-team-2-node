@@ -16,21 +16,22 @@ duplicate key value violates unique constraint "app_user_email_key
 ## Create a new post
 
 ```bash
-curl -i -X POST localhost:3000/posts -d '{"authorName": "nimi", "authorEmail": "email", "text": "lalala"}' -H "Content-Type: application/json"
+curl -X POST localhost:3000/posts -d '{"text": "lalala"}' -H "Content-Type: application/json"
+{"data":{"id":"8681ac0f-305e-405d-87c9-25edfcd144d5","user_id":null,"created_at":"2023-12-17T13:13:20.307Z","text":"lalala","likes":0}}
 ```
 
 ## Update existing post
 
 ```bash
 curl -i -X PATCH localhost:3000/posts/0a290bc2-c8b2-4c4d-b89d-0713bd2b7799 -d '{"text": "ghhhhhh"}' -H "Content-Type: application/json"
-{"data":{"id":"0a290bc2-c8b2-4c4d-b89d-0713bd2b7799","author_name":"nimi","author_email":"email","created_at":"2023-12-17T09:55:24.766Z","text":"ghhhhhh","likes":0}}
+{"data":{"id":"0a290bc2-c8b2-4c4d-b89d-0713bd2b7799","user_id":null,"created_at":"2023-12-17T09:55:24.766Z","text":"ghhhhhh","likes":0}}
 ```
 
 ## Read all posts
 
 ```bash
 curl localhost:3000/posts
-{"data":[{"id":"23d3f38a-2301-43b6-a2ac-9b97c2bd1092","author_name":"nim345i","author_email":"email","created_at":"2023-12-16T18:14:18.197Z","text":"lalala","likes":0},{"id":"22c2bc0f-1344-4d44-a644-fad4548f0ca3","author_name":"nimi","author_email":"email","created_at":"2023-12-16T18:14:27.701Z","text":"lalala","likes":0}]}
+{"data":[{"id":"23d3f38a-2301-43b6-a2ac-9b97c2bd1092","user_id":null,"created_at":"2023-12-16T18:14:18.197Z","text":"lalala","likes":0},{"id":"22c2bc0f-1344-4d44-a644-fad4548f0ca3","user_id":"1156369b-af42-4b08-9d56-b23e6fa8d688","created_at":"2023-12-16T18:14:27.701Z","text":"lalala","likes":0}]}
 ```
 
 ## Read one post
@@ -51,7 +52,7 @@ Keep-Alive: timeout=5
 ... with existing UUID
 ```bash
 curl localhost:3000/posts/23d3f38a-2301-43b6-a2ac-9b97c2bd1092
-{"data":{"id":"23d3f38a-2301-43b6-a2ac-9b97c2bd1092","author_name":"nim345i","author_email":"email","created_at":"2023-12-16T18:14:18.197Z","text":"lalala","likes":0}}
+{"data":{"id":"23d3f38a-2301-43b6-a2ac-9b97c2bd1092","user_id":null,"created_at":"2023-12-16T18:14:18.197Z","text":"lalala","likes":0}}
 ```
 
 ## Delete existing post
