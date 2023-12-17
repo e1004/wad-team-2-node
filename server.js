@@ -1,9 +1,13 @@
 const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const cors = require('cors');
 const express = require('express');
 const pool = require('./database');
 
 const port = process.env.PORT || 3000;
+const secret = 'suvaline';
+const maxAge = 60 * 60; // milliseconds
 
 const app = express();
 
@@ -82,5 +86,28 @@ app.patch('/posts/:id', async (req, res) => {
     res.status(404).json({ error: 'Post not found' });
   } else {
     res.status(200).json({ data: updatedPost.rows[0] });
+  }
+});
+
+const generateJWT = (id) => jwt.sign({ id }, secret, { expiresIn: maxAge });
+
+app.post('/auth/signup', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const salt = await bcrypt.genSalt();
+    const bcryptPassword = await bcrypt.hash(password, salt);
+    const authUser = await pool.query(
+      `INSERT INTO app_user(email,password)
+        VALUES ($1, $2)
+        RETURNING *`,
+      [email, bcryptPassword],
+    );
+    const token = await generateJWT(authUser.rows[0].id);
+    res
+      .status(201)
+      .cookie('jwt', token, { maxAge, httpOnly: true })
+      .json({ user_id: authUser.rows[0].id, user_email: authUser.rows[0].email });
+  } catch (err) {
+    res.status(400).send(err.message);
   }
 });

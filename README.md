@@ -3,6 +3,16 @@ wad team 2 back end
 
 # Endpoint demos
 
+## Sign up with a user
+
+```bash
+curl -X POST localhost:3000/auth/signup -d '{"email": "a@a.com", "password": "1234"}' -H "content-type:application/json"
+{"user_id":"1156369b-af42-4b08-9d56-b23e6fa8d688"}
+
+curl -X POST localhost:3000/auth/signup -d '{"email": "a@a.com", "password": "1234"}' -H "content-type:application/json"
+duplicate key value violates unique constraint "app_user_email_key
+```
+
 ## Create a new post
 
 ```bash
