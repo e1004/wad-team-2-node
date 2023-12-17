@@ -67,3 +67,17 @@ app.delete('/posts', async (req, res) => {
   );
   res.status(204).send();
 });
+
+app.patch('/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+  const { text } = req.body;
+  const updatedPost = await pool.query(
+    'UPDATE post SET text=$1 WHERE id=$2 RETURNING *',
+    [text, postId],
+  );
+  if (updatedPost.rows.length === 0) {
+    res.status(404).json({ error: 'Post not found' });
+  } else {
+    res.status(200).json({ data: updatedPost.rows[0] });
+  }
+});

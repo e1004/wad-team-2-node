@@ -9,6 +9,13 @@ wad team 2 back end
 curl -i -X POST localhost:3000/posts -d '{"authorName": "nimi", "authorEmail": "email", "text": "lalala"}' -H "Content-Type: application/json"
 ```
 
+## Update existing post
+
+```bash
+curl -i -X PATCH localhost:3000/posts/0a290bc2-c8b2-4c4d-b89d-0713bd2b7799 -d '{"text": "ghhhhhh"}' -H "Content-Type: application/json"
+{"data":{"id":"0a290bc2-c8b2-4c4d-b89d-0713bd2b7799","author_name":"nimi","author_email":"email","created_at":"2023-12-17T09:55:24.766Z","text":"ghhhhhh","likes":0}}
+```
+
 ## Read all posts
 
 ```bash
