@@ -21,6 +21,12 @@ ion/json"
 {"user_id":"3ed4eb29-2111-46a1-ad45-974ed4961fe7"}
 ```
 
+## Logout user
+
+```bash
+curl localhost:3000/auth/logout
+```
+
 ## Create a new post
 
 ... without user
