@@ -1,6 +1,25 @@
 # wad-team-2-node
 wad team 2 back end
 
+Install dependencies
+
+```bash
+npm install
+```
+
+Create database "wad2"
+
+```bash
+psql -h localhost -p 5432 -U postgres
+create database wad2;
+```
+
+And then run the server
+
+```bash
+npm run start
+```
+
 # Endpoint demos
 
 ## Sign up with a user
