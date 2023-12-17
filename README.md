@@ -16,9 +16,28 @@ duplicate key value violates unique constraint "app_user_email_key
 ## Login user
 
 ```bash
-curl -X POST localhost:3000/auth/login -d '{"email": "a@a.com", "password": "1234"}' -H "content-type:applicat
-ion/json"
+curl -i -X POST localhost:3000/auth/login -d '{"email": "a@a.com", "password": "1234"}' -H "content-type:application/json"
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Set-Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDRlYjI5LTIxMTEtNDZhMS1hZDQ1LTk3NGVkNDk2MWZlNyIsImlhdCI6MTcwMjgzMzcyNiwiZXhwIjoxNzA4ODMzNzI2fQ.b3DpiPce1WObHB4heDEQFMms6Xab-hSYY1KzFx8_KVg; Max-Age=6000; Path=/; Expires=Sun, 17 Dec 2023 19:02:06 GMT; HttpOnly
+Content-Type: application/json; charset=utf-8
+Content-Length: 50
+ETag: W/"32-usmxUAyzBxaKgCIqjRNTrXdxVWM"
+Date: Sun, 17 Dec 2023 17:22:06 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
 {"user_id":"3ed4eb29-2111-46a1-ad45-974ed4961fe7"}
+```
+
+## Authenticate user
+
+```bash
+curl localhost:3000/auth/authenticate --cookie "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDRlYjI5LTIxMTEtNDZhMS1hZDQ1LTk3NGVkNDk2MWZlNyIsImlhdCI6MTcwMjgzMzcyNiwiZXhwIjoxNzA4ODMzNzI2fQ.b3DpiPce1WObHB4heDEQFMms6Xab-hSYY1KzFx8_KVg; Max-Age=6000; Path=/; Expires=Sun, 17 Dec 2023 19:02:06 GMT; HttpOnly"
+{"authenticated":true}
 ```
 
 ## Logout user

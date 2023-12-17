@@ -8,7 +8,7 @@ const pool = require('./database');
 
 const port = process.env.PORT || 3000;
 const secret = 'suvaline';
-const maxAge = 60 * 60; // milliseconds
+const maxAge = 6000000; // milliseconds
 
 const app = express();
 
@@ -122,4 +122,25 @@ app.post('/auth/login', async (req, res) => {
 
 app.get('/auth/logout', (req, res) => {
   res.status(204).clearCookie('jwt').json();
+});
+
+app.get('/auth/authenticate', async (req, res) => {
+  const token = req.cookies.jwt;
+  let authenticated = false;
+  try {
+    if (token) {
+      await jwt.verify(token, secret, (err) => {
+        if (err) {
+          res.send({ authenticated });
+        } else {
+          authenticated = true;
+          res.send({ authenticated });
+        }
+      });
+    } else {
+      res.send({ authenticated });
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 });
