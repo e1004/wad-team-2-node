@@ -81,6 +81,9 @@ const generateJWT = (id) => jwt.sign({ id }, secret, { expiresIn: maxAge });
 app.post('/auth/signup', async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (email.length === 0 || password.length === 0) {
+      return res.status(400).json({ error: 'Email or pwd is missing' });
+    }
     const salt = await bcrypt.genSalt();
     const bcryptPassword = await bcrypt.hash(password, salt);
     const authUser = await pool.query(
@@ -90,12 +93,12 @@ app.post('/auth/signup', async (req, res) => {
       [email, bcryptPassword],
     );
     const token = await generateJWT(authUser.rows[0].id);
-    res.status(201).cookie('jwt', token, { maxAge, httpOnly: true }).json({
+    return res.status(201).cookie('jwt', token, { maxAge, httpOnly: true }).json({
       user_id: authUser.rows[0].id,
       user_email: authUser.rows[0].email,
     });
   } catch (err) {
-    res.status(400).send(err.message);
+    return res.status(400).send(err.message);
   }
 });
 
@@ -105,6 +108,9 @@ app.post('/auth/login', async (req, res) => {
     const user = await pool.query('SELECT * FROM app_user WHERE email = $1', [
       email,
     ]);
+    if (email.length === 0 || password.length === 0) {
+      return res.status(400).json({ error: 'Email or pwd is missing' });
+    }
     if (user.rows.length === 0) return res.status(401).json({ error: 'User is not registered' });
 
     const validPassword = await bcrypt.compare(password, user.rows[0].password);
